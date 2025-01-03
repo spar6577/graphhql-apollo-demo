@@ -1,8 +1,8 @@
 type Listing {
   id: ID!
   title: String!
-  numOfBeds: Int
-  costPerNight: Float
+  numOfBeds: Int!
+  costPerNight: Float!
   closedForBookings: Boolean
   amenities: [Amenity!]!
 }
@@ -18,4 +18,34 @@ type Amenity {
 type Query {
   featuredListings: [Listing!]!
   listing(id: ID!): Listing
+}
+
+type Mutation {
+  "Creates a new listing"
+  createListing(input: CreateListingInput!): CreateListingResponse!
+}
+type CreateListingResponse {
+  "Status of the mutation"
+  code: Int!
+  "Indicated whether mutation was successfull"
+  success: Boolean!
+  "Messsage"
+  message: String!
+  "The newly created listing"
+  listing: Listing
+}
+
+input CreateListingInput {
+  "The listing's title"
+  title: String!
+  "The listing's description"
+  description: String!
+  "The number of beds available"
+  numOfBeds: Int!
+  "The cost per night"
+  costPerNight: Float!
+  "Indicates whether listing is closed for bookings (on hiatus)"
+  closedForBookings: Boolean
+  "The Listing's amenities"
+  amenities: [ID!]!
 }
