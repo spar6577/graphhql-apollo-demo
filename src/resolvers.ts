@@ -1,12 +1,21 @@
+import { validateFullAmenities } from "./helpers";
 import { Resolvers } from "./types";
 
 export const resolvers: Resolvers = {
   Query: {
     featuredListings: (_, __, { dataSources }) => {
-      return dataSources.ListingAPI.getFeaturedListings();
+      return dataSources.listingAPI.getFeaturedListings();
     },
     listing: (_, { id }, { dataSources }) => {
-      return dataSources.ListingAPI.getListing(id);
+      return dataSources.listingAPI.getListing(id);
+    },
+  },
+
+  Listing: {
+    amenities: ({ id, amenities }, _, { dataSources }) => {
+      return validateFullAmenities(amenities)
+        ? amenities
+        : dataSources.listingAPI.getAmenities(id);
     },
   },
 };

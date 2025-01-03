@@ -19,7 +19,7 @@ async function startApolloServer() {
       const { cache } = server;
       return {
         dataSources: {
-          ListingAPI: new ListingAPI(),
+          listingAPI: new ListingAPI(),
         },
       };
     },
